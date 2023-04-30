@@ -133,6 +133,7 @@ Requested path was: {f}
                 open_folder_button = gr.Button(folder_symbol, visible=not shared.cmd_opts.hide_ui_dir_config)
 
                 # changes were made here to have the save button appear on the 'extras' tab
+                # if statement for all tabs, not just img2img or txt2img tabs
                 if tabname:
                     save = gr.Button('Save', elem_id=f'save_{tabname}')
                     save_zip = gr.Button('Zip', elem_id=f'save_zip_{tabname}')
@@ -145,7 +146,8 @@ Requested path was: {f}
                 outputs=[],
             )
 
-            if tabname != "extras":
+            # if statement for all tabs, not just img2img or txt2img tabs
+            if tabname:
                 download_files = gr.File(None, file_count="multiple", interactive=False, show_label=False, visible=False, elem_id=f'download_files_{tabname}')
 
                 with gr.Group():
@@ -153,7 +155,9 @@ Requested path was: {f}
                     html_log = gr.HTML(elem_id=f'html_log_{tabname}')
 
                     generation_info = gr.Textbox(visible=False, elem_id=f'generation_info_{tabname}')
-                    if tabname == 'txt2img' or tabname == 'img2img':
+
+                    # if statement for all tabs, not just img2img or txt2img tabs
+                    if tabname:
                         generation_info_button = gr.Button(visible=False, elem_id=f"{tabname}_generation_info_button")
                         generation_info_button.click(
                             fn=update_generation_info,
@@ -204,6 +208,8 @@ Requested path was: {f}
                 paste_field_names = modules.scripts.scripts_txt2img.paste_field_names
             elif tabname == "img2img":
                 paste_field_names = modules.scripts.scripts_img2img.paste_field_names
+            elif tabname == "Extras":
+                paste_field_names = modules.scripts.scripts_Extras.paste_field_names
 
             for paste_tabname, paste_button in buttons.items():
                 parameters_copypaste.register_paste_params_button(parameters_copypaste.ParamBinding(
@@ -211,4 +217,6 @@ Requested path was: {f}
                     paste_field_names=paste_field_names
                 ))
 
-            return result_gallery, generation_info if tabname != "extras" else html_info_x, html_info, html_log
+            # change inorder to generate info from all the tab names
+            # previously stating: if tabname != "extras"
+            return result_gallery, generation_info if tabname else html_info_x, html_info, html_log

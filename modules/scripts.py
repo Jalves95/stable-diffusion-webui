@@ -501,6 +501,8 @@ class ScriptRunner:
 
 scripts_txt2img = ScriptRunner()
 scripts_img2img = ScriptRunner()
+scripts_Extras = ScriptRunner()
+
 scripts_postproc = scripts_postprocessing.ScriptPostprocessingRunner()
 scripts_current: ScriptRunner = None
 
@@ -509,15 +511,17 @@ def reload_script_body_only():
     cache = {}
     scripts_txt2img.reload_sources(cache)
     scripts_img2img.reload_sources(cache)
+    scripts_Extras.reload_sources(cache)
 
 
 def reload_scripts():
-    global scripts_txt2img, scripts_img2img, scripts_postproc
+    global scripts_txt2img, scripts_img2img, scripts_Extras, scripts_postproc
 
     load_scripts()
 
     scripts_txt2img = ScriptRunner()
     scripts_img2img = ScriptRunner()
+    scripts_Extras = ScriptRunner()
     scripts_postproc = scripts_postprocessing.ScriptPostprocessingRunner()
 
 
