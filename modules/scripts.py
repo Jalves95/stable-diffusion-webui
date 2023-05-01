@@ -536,7 +536,6 @@ def add_classes_to_gradio_component(comp):
         comp.elem_classes.append('multiselect')
 
 
-
 def IOComponent_init(self, *args, **kwargs):
     if scripts_current is not None:
         scripts_current.before_component(self, **kwargs)

@@ -1,0 +1,16 @@
+Extras tab Safe button
+
+When first loading up the program, make your way into the "Extras Tab".
+There you will me prompt with either dropping an image or uploading an image.
+When successfully inserted an image, press "Generate" along with any wanted features.
+The image will then be created in the next box, giving the results the user now has the ability
+to either save the image with a single button or send to another tab.
+The user should be able to see a "save" button located under the gernerated image.
+
+--- "Extras_Tab_Save_Button.png" for visual instructions of how it should appear ---
+--- "Extras_Tab_No_Save_Button.png" of how it should NOT appear ---
+
+When the file is saved, you should make your way to the "outputs" folder inside your
+project, then inside the "extras-images" you will see your saved image,
+
+--- "Saved_File_Location.png" for visual instructions of where your saved image will be saved ---

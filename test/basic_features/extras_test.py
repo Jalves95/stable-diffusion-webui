@@ -5,6 +5,7 @@ from gradio.processing_utils import encode_pil_to_base64
 from PIL import Image
 from modules.paths import script_path
 
+
 class TestExtrasWorking(unittest.TestCase):
     def setUp(self):
         self.url_extras_single = "http://localhost:7860/sdapi/v1/extra-single-image"
