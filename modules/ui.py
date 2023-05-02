@@ -151,6 +151,10 @@ def process_interrogate(interrogation_function, mode, ii_input_dir, ii_output_di
         for image in images:
             img = Image.open(image)
             filename = os.path.basename(image)
+            # with open(os.path.join(shared.opts.outdir_save, "log.txt"), "a", encoding="utf8", newline='') as file:
+            f = open("log.txt", "a")
+            f.write(f"input file = {filename}")
+            f.close()
             left, _ = os.path.splitext(filename)
             print(interrogation_function(img), file=open(os.path.join(ii_output_dir, left + ".txt"), 'a'))
 
