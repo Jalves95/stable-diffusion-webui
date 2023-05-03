@@ -149,23 +149,12 @@ def process_interrogate(interrogation_function, mode, ii_input_dir, ii_output_di
             ii_output_dir = ii_input_dir
 
         for image in images:
-            import csv
             img = Image.open(image)
             filename = os.path.basename(image)
-            with open(os.path.join(shared.opts.outdir_save, "log.csv"), "a", encoding="utf8", newline='') as file:
-                at_start = file.tell() == 0
-                writer = csv.writer(file)
-                if at_start:
-                    writer.writerow(
-                        ["prompt", "seed", "width", "height", "sampler", "cfgs", "steps", "filename", "negative_prompt",
-                         "input_images"])
+            left, _ = os.path.splitext(filename)
+            print(interrogation_function(img), file=open(os.path.join(ii_output_dir, left + ".txt"), 'a'))
 
-
-                writer.writerow(["", "", "", "", "","", "", "", "",filename])
-            # left, _ = os.path.splitext(filename)
-            # print(interrogation_function(img), file=open(os.path.join(ii_output_dir, left + ".txt"), 'a'))
-
-        # return [gr.update(), None]
+        return [gr.update(), None]
 
 
 def interrogate(image):
