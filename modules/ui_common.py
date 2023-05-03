@@ -85,7 +85,7 @@ def save_files(js_data, images, do_make_zip, index):
 
         writer.writerow([data["prompt"], data["seed"], data["width"], data["height"], data["sampler_name"],
                          data["cfg_scale"], data["steps"], filenames[0], data["negative_prompt"],
-                         filenames])
+                         '1' + filenames[0]])
 
     # Make Zip
     if do_make_zip:
