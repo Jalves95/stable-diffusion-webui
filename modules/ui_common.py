@@ -62,7 +62,8 @@ def save_files(js_data, images, do_make_zip, index):
         at_start = file.tell() == 0
         writer = csv.writer(file)
         if at_start:
-            writer.writerow(["prompt", "seed", "width", "height", "sampler", "cfgs", "steps", "filename", "negative_prompt", "input_images"])
+            writer.writerow(["prompt", "seed", "width", "height", "sampler", "cfgs",
+                             "steps", "filename", "negative_prompt", "input_images"])
 
         for image_index, filedata in enumerate(images, start_index):
             image = image_from_url_text(filedata)
@@ -70,7 +71,10 @@ def save_files(js_data, images, do_make_zip, index):
             is_grid = image_index < p.index_of_first_image
             i = 0 if is_grid else (image_index - p.index_of_first_image)
 
-            fullfn, txt_fullfn = modules.images.save_image(image, path, "", seed=p.all_seeds[i], prompt=p.all_prompts[i], extension=extension, info=p.infotexts[image_index], grid=is_grid, p=p, save_to_dirs=save_to_dirs)
+            fullfn, txt_fullfn = modules.images.save_image(image, path, "", seed=p.all_seeds[i], prompt=p.all_prompts[i],
+                                                           extension=extension, info=p.infotexts[image_index],
+                                                           grid=is_grid, p=p, save_to_dirs=save_to_dirs,
+                                                           input_images=image)
 
             filename = os.path.relpath(fullfn, path)
             filenames.append(filename)
@@ -79,7 +83,9 @@ def save_files(js_data, images, do_make_zip, index):
                 filenames.append(os.path.basename(txt_fullfn))
                 fullfns.append(txt_fullfn)
 
-        writer.writerow([data["prompt"], data["seed"], data["width"], data["height"], data["sampler_name"], data["cfg_scale"], data["steps"], filenames[0], data["negative_prompt"], data["input_images"]])
+        writer.writerow([data["prompt"], data["seed"], data["width"], data["height"], data["sampler_name"],
+                         data["cfg_scale"], data["steps"], filenames[0], data["negative_prompt"],
+                         '1' + filenames[0]])
 
     # Make Zip
     if do_make_zip:

@@ -352,14 +352,16 @@ class FilenameGenerator:
         'prompt_no_styles': lambda self: self.prompt_no_style(),
         'prompt_spaces': lambda self: sanitize_filename_part(self.prompt, replace_spaces=False),
         'prompt_words': lambda self: self.prompt_words(),
+        'input_images': lambda self: self
     }
     default_time_format = '%Y%m%d%H%M%S'
 
-    def __init__(self, p, seed, prompt, image):
+    def __init__(self, p, seed, prompt, image, input_images):
         self.p = p
         self.seed = seed
         self.prompt = prompt
         self.image = image
+        self.input_images = input_images
 
     def prompt_no_style(self):
         if self.p is None or self.prompt is None:
@@ -457,7 +459,11 @@ def get_next_sequence_number(path, basename):
     return result + 1
 
 
-def save_image(image, path, basename, seed=None, prompt=None, extension='png', info=None, short_filename=False, no_prompt=False, grid=False, pnginfo_section_name='parameters', p=None, existing_info=None, forced_filename=None, suffix="", save_to_dirs=None):
+def save_image(image, path, basename, seed=None, prompt=None, extension='png',
+               info=None, short_filename=False, no_prompt=False,
+               grid=False, pnginfo_section_name='parameters',
+               p=None, existing_info=None, forced_filename=None, suffix="", save_to_dirs=None,
+               input_images= None):
     """Save an image.
 
     Args:
@@ -490,7 +496,7 @@ def save_image(image, path, basename, seed=None, prompt=None, extension='png', i
         txt_fullfn (`str` or None):
             If a text file is saved for this image, this will be its full path. Otherwise None.
     """
-    namegen = FilenameGenerator(p, seed, prompt, image)
+    namegen = FilenameGenerator(p, seed, prompt, image, input_images)
 
     if save_to_dirs is None:
         save_to_dirs = (grid and opts.grid_save_to_dirs) or (not grid and opts.save_to_dirs and not no_prompt)
@@ -502,7 +508,7 @@ def save_image(image, path, basename, seed=None, prompt=None, extension='png', i
     os.makedirs(path, exist_ok=True)
 
     if forced_filename is None:
-        if short_filename or seed is None:
+        if short_filename or seed or input_images is None:
             file_decoration = ""
         elif opts.save_to_dirs:
             file_decoration = opts.samples_filename_pattern or "[seed]"
